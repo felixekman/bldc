@@ -52,7 +52,7 @@
 #define MCCONF_L_MIN_VOLTAGE			8.0		// Minimum input voltage
 #endif
 #ifndef MCCONF_L_MAX_VOLTAGE
-#define MCCONF_L_MAX_VOLTAGE			50.0	// Maximum input voltage
+#define MCCONF_L_MAX_VOLTAGE			57.0	// Maximum input voltage
 #endif
 #ifndef MCCONF_L_BATTERY_CUT_START
 #define MCCONF_L_BATTERY_CUT_START		10.0	// Start limiting the positive current at this voltage
@@ -121,6 +121,9 @@
 #ifndef MCCONF_P_PID_KD
 #define MCCONF_P_PID_KD					0.0004	// Derivative gain
 #endif
+#ifndef MCCONF_P_PID_ANG_DIV
+#define MCCONF_P_PID_ANG_DIV			1.0		// Divide angle by this value
+#endif
 
 // Current control parameters
 #ifndef MCCONF_CC_GAIN
@@ -159,6 +162,35 @@
 #define MCCONF_SL_MAX_FB_CURR_DIR_CHANGE	10.0	// Maximum current during full brake during which a direction change is allowed
 #endif
 
+// BLDC hall sensor table
+#ifndef MCCONF_HALL_TAB_0
+#define MCCONF_HALL_TAB_0				-1
+#endif
+#ifndef MCCONF_HALL_TAB_1
+#define MCCONF_HALL_TAB_1				1
+#endif
+#ifndef MCCONF_HALL_TAB_2
+#define MCCONF_HALL_TAB_2				3
+#endif
+#ifndef MCCONF_HALL_TAB_3
+#define MCCONF_HALL_TAB_3				2
+#endif
+#ifndef MCCONF_HALL_TAB_4
+#define MCCONF_HALL_TAB_4				5
+#endif
+#ifndef MCCONF_HALL_TAB_5
+#define MCCONF_HALL_TAB_5				6
+#endif
+#ifndef MCCONF_HALL_TAB_6
+#define MCCONF_HALL_TAB_6				4
+#endif
+#ifndef MCCONF_HALL_TAB_7
+#define MCCONF_HALL_TAB_7				-1
+#endif
+#ifndef MCCONF_HALL_ERPM
+#define MCCONF_HALL_ERPM				2000.0	// ERPM above which sensorless commutation is used in hybrid mode
+#endif
+
 // FOC
 #ifndef MCCONF_FOC_CURRENT_KP
 #define MCCONF_FOC_CURRENT_KP			0.03
@@ -167,10 +199,10 @@
 #define MCCONF_FOC_CURRENT_KI			50.0
 #endif
 #ifndef MCCONF_FOC_F_SW
-#define MCCONF_FOC_F_SW					25000.0
+#define MCCONF_FOC_F_SW					20000.0
 #endif
 #ifndef MCCONF_FOC_DT_US
-#define MCCONF_FOC_DT_US				0.15 // Microseconds for dead time compensation
+#define MCCONF_FOC_DT_US				0.08 // Microseconds for dead time compensation
 #endif
 #ifndef MCCONF_FOC_ENCODER_INVERTED
 #define MCCONF_FOC_ENCODER_INVERTED		false
@@ -185,10 +217,10 @@
 #define MCCONF_FOC_SENSOR_MODE			FOC_SENSOR_MODE_SENSORLESS
 #endif
 #ifndef MCCONF_FOC_PLL_KP
-#define MCCONF_FOC_PLL_KP				40.0
+#define MCCONF_FOC_PLL_KP				2000.0
 #endif
 #ifndef MCCONF_FOC_PLL_KI
-#define MCCONF_FOC_PLL_KI				40000.0
+#define MCCONF_FOC_PLL_KI				20000.0
 #endif
 #ifndef MCCONF_FOC_MOTOR_L
 #define MCCONF_FOC_MOTOR_L				0.000007
@@ -223,34 +255,32 @@
 #ifndef MCCONF_FOC_SL_D_CURRENT_FACTOR
 #define MCCONF_FOC_SL_D_CURRENT_FACTOR	0.0		// Maximum q-axis current factor
 #endif
-
-// Default hall sensor table
-#ifndef MCCONF_HALL_TAB_0
-#define MCCONF_HALL_TAB_0				-1
+#ifndef MCCONF_FOC_HALL_TAB_0
+#define MCCONF_FOC_HALL_TAB_0			255
 #endif
-#ifndef MCCONF_HALL_TAB_1
-#define MCCONF_HALL_TAB_1				1
+#ifndef MCCONF_FOC_HALL_TAB_1
+#define MCCONF_FOC_HALL_TAB_1			255
 #endif
-#ifndef MCCONF_HALL_TAB_2
-#define MCCONF_HALL_TAB_2				3
+#ifndef MCCONF_FOC_HALL_TAB_2
+#define MCCONF_FOC_HALL_TAB_2			255
 #endif
-#ifndef MCCONF_HALL_TAB_3
-#define MCCONF_HALL_TAB_3				2
+#ifndef MCCONF_FOC_HALL_TAB_3
+#define MCCONF_FOC_HALL_TAB_3			255
 #endif
-#ifndef MCCONF_HALL_TAB_4
-#define MCCONF_HALL_TAB_4				5
+#ifndef MCCONF_FOC_HALL_TAB_4
+#define MCCONF_FOC_HALL_TAB_4			255
 #endif
-#ifndef MCCONF_HALL_TAB_5
-#define MCCONF_HALL_TAB_5				6
+#ifndef MCCONF_FOC_HALL_TAB_5
+#define MCCONF_FOC_HALL_TAB_5			255
 #endif
-#ifndef MCCONF_HALL_TAB_6
-#define MCCONF_HALL_TAB_6				4
+#ifndef MCCONF_FOC_HALL_TAB_6
+#define MCCONF_FOC_HALL_TAB_6			255
 #endif
-#ifndef MCCONF_HALL_TAB_7
-#define MCCONF_HALL_TAB_7				-1
+#ifndef MCCONF_FOC_HALL_TAB_7
+#define MCCONF_FOC_HALL_TAB_7			255
 #endif
-#ifndef MCCONF_HALL_ERPM
-#define MCCONF_HALL_ERPM				2000.0	// ERPM above which sensorless commutation is used in hybrid mode
+#ifndef MCCONF_FOC_HALL_ERPM
+#define MCCONF_FOC_HALL_ERPM			2000.0	// ERPM above which only the observer is used
 #endif
 
 // Misc

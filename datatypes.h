@@ -56,7 +56,8 @@ typedef enum {
 
 typedef enum {
 	FOC_SENSOR_MODE_SENSORLESS = 0,
-	FOC_SENSOR_MODE_ENCODER
+	FOC_SENSOR_MODE_ENCODER,
+	FOC_SENSOR_MODE_HALL
 } mc_foc_sensor_mode;
 
 typedef enum {
@@ -89,7 +90,8 @@ typedef enum {
 	DISP_POS_MODE_INDUCTANCE,
 	DISP_POS_MODE_OBSERVER,
 	DISP_POS_MODE_ENCODER,
-	DISP_POS_MODE_ENCODER_POS_ERROR,
+	DISP_POS_MODE_PID_POS,
+	DISP_POS_MODE_PID_POS_ERROR,
 	DISP_POS_MODE_ENCODER_OBSERVER_ERROR
 } disp_pos_mode;
 
@@ -169,6 +171,8 @@ typedef struct {
 	float foc_sl_d_current_duty;
 	float foc_sl_d_current_factor;
 	mc_foc_sensor_mode foc_sensor_mode;
+	uint8_t foc_hall_table[8];
+	float foc_hall_sl_erpm;
 	// Speed PID
 	float s_pid_kp;
 	float s_pid_ki;
@@ -178,6 +182,7 @@ typedef struct {
 	float p_pid_kp;
 	float p_pid_ki;
 	float p_pid_kd;
+	float p_pid_ang_div;
 	// Current controller
 	float cc_startup_boost_duty;
 	float cc_min_current;
@@ -239,6 +244,7 @@ typedef enum {
 	ADC_CTRL_TYPE_CURRENT_REV_BUTTON,
 	ADC_CTRL_TYPE_CURRENT_NOREV_BRAKE_CENTER,
 	ADC_CTRL_TYPE_CURRENT_NOREV_BRAKE_BUTTON,
+	ADC_CTRL_TYPE_CURRENT_NOREV_BRAKE_ADC,
 	ADC_CTRL_TYPE_DUTY,
 	ADC_CTRL_TYPE_DUTY_REV_CENTER,
 	ADC_CTRL_TYPE_DUTY_REV_BUTTON
@@ -282,6 +288,62 @@ typedef struct {
 	float tc_max_diff;
 } chuk_config;
 
+// NRF Datatypes
+typedef enum {
+	NRF_SPEED_250K = 0,
+	NRF_SPEED_1M,
+	NRF_SPEED_2M
+} NRF_SPEED;
+
+typedef enum {
+	NRF_POWER_M18DBM = 0,
+	NRF_POWER_M12DBM,
+	NRF_POWER_M6DBM,
+	NRF_POWER_0DBM
+} NRF_POWER;
+
+typedef enum {
+	NRF_AW_3 = 0,
+	NRF_AW_4,
+	NRF_AW_5
+} NRF_AW;
+
+typedef enum {
+	NRF_CRC_DISABLED = 0,
+	NRF_CRC_1B,
+	NRF_CRC_2B
+} NRF_CRC;
+
+typedef enum {
+	NRF_RETR_DELAY_250US = 0,
+	NRF_RETR_DELAY_500US,
+	NRF_RETR_DELAY_750US,
+	NRF_RETR_DELAY_1000US,
+	NRF_RETR_DELAY_1250US,
+	NRF_RETR_DELAY_1500US,
+	NRF_RETR_DELAY_1750US,
+	NRF_RETR_DELAY_2000US,
+	NRF_RETR_DELAY_2250US,
+	NRF_RETR_DELAY_2500US,
+	NRF_RETR_DELAY_2750US,
+	NRF_RETR_DELAY_3000US,
+	NRF_RETR_DELAY_3250US,
+	NRF_RETR_DELAY_3500US,
+	NRF_RETR_DELAY_3750US,
+	NRF_RETR_DELAY_4000US
+} NRF_RETR_DELAY;
+
+typedef struct {
+	NRF_SPEED speed;
+	NRF_POWER power;
+	NRF_CRC crc_type;
+	NRF_RETR_DELAY retry_delay;
+	unsigned char retries;
+	unsigned char channel;
+	unsigned char address[3];
+	bool send_crc_ack;
+} nrf_config;
+
 typedef struct {
 	// Settings
 	uint8_t controller_id;
@@ -304,6 +366,9 @@ typedef struct {
 
 	// Nunchuk application settings
 	chuk_config app_chuk_conf;
+
+	// NRF application settings
+	nrf_config app_nrf_conf;
 } app_configuration;
 
 // Communication commands
@@ -335,12 +400,15 @@ typedef enum {
 	COMM_DETECT_MOTOR_R_L,
 	COMM_DETECT_MOTOR_FLUX_LINKAGE,
 	COMM_DETECT_ENCODER,
+	COMM_DETECT_HALL_FOC,
 	COMM_REBOOT,
 	COMM_ALIVE,
 	COMM_GET_DECODED_PPM,
 	COMM_GET_DECODED_ADC,
 	COMM_GET_DECODED_CHUK,
-	COMM_FORWARD_CAN
+	COMM_FORWARD_CAN,
+	COMM_SET_CHUCK_DATA,
+	COMM_CUSTOM_APP_DATA
 } COMM_PACKET_ID;
 
 // CAN commands

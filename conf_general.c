@@ -118,6 +118,17 @@ void conf_general_get_default_app_configuration(app_configuration *conf) {
 	conf->app_chuk_conf.multi_esc = APPCONF_CHUK_MULTI_ESC;
 	conf->app_chuk_conf.tc = APPCONF_CHUK_TC;
 	conf->app_chuk_conf.tc_max_diff = APPCONF_CHUK_TC_MAX_DIFF;
+
+	conf->app_nrf_conf.speed = APPCONF_NRF_SPEED;
+	conf->app_nrf_conf.power = APPCONF_NRF_POWER;
+	conf->app_nrf_conf.crc_type = APPCONF_NRF_CRC;
+	conf->app_nrf_conf.retry_delay = APPCONF_NRF_RETR_DELAY;
+	conf->app_nrf_conf.retries = APPCONF_NRF_RETRIES;
+	conf->app_nrf_conf.channel = APPCONF_NRF_CHANNEL;
+	conf->app_nrf_conf.address[0] = APPCONF_NRF_ADDR_B0;
+	conf->app_nrf_conf.address[1] = APPCONF_NRF_ADDR_B1;
+	conf->app_nrf_conf.address[2] = APPCONF_NRF_ADDR_B2;
+	conf->app_nrf_conf.send_crc_ack = APPCONF_NRF_SEND_CRC_ACK;
 }
 
 /**
@@ -168,6 +179,16 @@ void conf_general_get_default_mc_configuration(mc_configuration *conf) {
 	conf->sl_cycle_int_rpm_br = MCCONF_SL_CYCLE_INT_BR;
 	conf->sl_bemf_coupling_k = MCCONF_SL_BEMF_COUPLING_K;
 
+	conf->hall_table[0] = MCCONF_HALL_TAB_0;
+	conf->hall_table[1] = MCCONF_HALL_TAB_1;
+	conf->hall_table[2] = MCCONF_HALL_TAB_2;
+	conf->hall_table[3] = MCCONF_HALL_TAB_3;
+	conf->hall_table[4] = MCCONF_HALL_TAB_4;
+	conf->hall_table[5] = MCCONF_HALL_TAB_5;
+	conf->hall_table[6] = MCCONF_HALL_TAB_6;
+	conf->hall_table[7] = MCCONF_HALL_TAB_7;
+	conf->hall_sl_erpm = MCCONF_HALL_ERPM;
+
 	conf->foc_current_kp = MCCONF_FOC_CURRENT_KP;
 	conf->foc_current_ki = MCCONF_FOC_CURRENT_KI;
 	conf->foc_f_sw = MCCONF_FOC_F_SW;
@@ -189,16 +210,15 @@ void conf_general_get_default_mc_configuration(mc_configuration *conf) {
 	conf->foc_sl_openloop_time = MCCONF_FOC_SL_OPENLOOP_TIME;
 	conf->foc_sl_d_current_duty = MCCONF_FOC_SL_D_CURRENT_DUTY;
 	conf->foc_sl_d_current_factor = MCCONF_FOC_SL_D_CURRENT_FACTOR;
-
-	conf->hall_table[0] = MCCONF_HALL_TAB_0;
-	conf->hall_table[1] = MCCONF_HALL_TAB_1;
-	conf->hall_table[2] = MCCONF_HALL_TAB_2;
-	conf->hall_table[3] = MCCONF_HALL_TAB_3;
-	conf->hall_table[4] = MCCONF_HALL_TAB_4;
-	conf->hall_table[5] = MCCONF_HALL_TAB_5;
-	conf->hall_table[6] = MCCONF_HALL_TAB_6;
-	conf->hall_table[7] = MCCONF_HALL_TAB_7;
-	conf->hall_sl_erpm = MCCONF_HALL_ERPM;
+	conf->foc_hall_table[0] = MCCONF_FOC_HALL_TAB_0;
+	conf->foc_hall_table[1] = MCCONF_FOC_HALL_TAB_1;
+	conf->foc_hall_table[2] = MCCONF_FOC_HALL_TAB_2;
+	conf->foc_hall_table[3] = MCCONF_FOC_HALL_TAB_3;
+	conf->foc_hall_table[4] = MCCONF_FOC_HALL_TAB_4;
+	conf->foc_hall_table[5] = MCCONF_FOC_HALL_TAB_5;
+	conf->foc_hall_table[6] = MCCONF_FOC_HALL_TAB_6;
+	conf->foc_hall_table[7] = MCCONF_FOC_HALL_TAB_7;
+	conf->foc_hall_sl_erpm = MCCONF_FOC_HALL_ERPM;
 
 	conf->s_pid_kp = MCCONF_S_PID_KP;
 	conf->s_pid_ki = MCCONF_S_PID_KI;
@@ -208,6 +228,7 @@ void conf_general_get_default_mc_configuration(mc_configuration *conf) {
 	conf->p_pid_kp = MCCONF_P_PID_KP;
 	conf->p_pid_ki = MCCONF_P_PID_KI;
 	conf->p_pid_kd = MCCONF_P_PID_KD;
+	conf->p_pid_ang_div = MCCONF_P_PID_ANG_DIV;
 
 	conf->cc_startup_boost_duty = MCCONF_CC_STARTUP_BOOST_DUTY;
 	conf->cc_min_current = MCCONF_CC_MIN_CURRENT;
